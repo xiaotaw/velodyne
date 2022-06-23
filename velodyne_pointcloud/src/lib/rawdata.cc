@@ -92,7 +92,10 @@ inline float SQR(float val) { return val*val; }
   /**
    * Build a timing table for each block/firing. Stores in timing_offsets vector
    */
-  bool RawData::buildTimings(){
+  bool RawData::buildTimings(const std::string& model){
+    if (!model.empty()) {
+      config_.model = model;
+    }
     // vlp16    
     if (config_.model == "VLP16"){
       // timing table calculation, from velodyne user manual
@@ -197,6 +200,7 @@ inline float SQR(float val) { return val*val; }
     }
     else{
       timing_offsets.clear();
+      std::cout << "Timings not supported for model " << config_.model << std::endl;
       ROS_WARN("Timings not supported for model %s", config_.model.c_str());
     }
 
